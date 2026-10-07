@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registrazione - MyApp</title>
+    <link rel="stylesheet" href="/css/navbar.css">
+    <link rel="stylesheet" href="/css/signin.css">
+</head>
+<body>
+
+    <!-- Navbar dinamica -->
+    <div id="navbar-placeholder"></div>
+
+    <main>
+        <section class="card">
+            <h1>Crea un account</h1>
+            <form action="/signin" method="POST">
+                <div class="form-group">
+                    <label for="username">Nome Utente:</label><br>
+                    <input type="text" id="username" name="username" required>
+                </div>
+                <br>
+                <div class="form-group">
+                    <label for="email">Email:</label><br>
+                    <input type="email" id="email" name="email" required>
+                </div>
+                <br>
+                <div class="form-group">
+                    <label for="password">Password:</label><br>
+                    <input type="password" id="password" name="password" required>
+                </div>
+                <br>
+                <button type="submit">Registrati</button>
+            </form>
+            <br>
+            <p>Hai già un account? <a href="/login">Accedi qui</a></p>
+        </section>
+    </main>
+
+    <!-- Footer dinamico -->
+    <div id="footer-placeholder"></div>
+
+    <!-- Script per includere Navbar e Footer -->
+    <script>
+        fetch('/components/navbar.html')
+            .then(res => res.text())
+            .then(html => document.getElementById('navbar-placeholder').innerHTML = html);
+
+        fetch('/components/footer.html')
+            .then(res => res.text())
+            .then(html => document.getElementById('footer-placeholder').innerHTML = html);
+    </script>
+</body>
+</html>
