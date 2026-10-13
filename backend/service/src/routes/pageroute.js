@@ -1,30 +1,37 @@
+//raccolgo qui tutte le routes delle pages, ossia i percorsi ut
+//in altri termini tutti i get saranno raccolti qui
+
 const express = require("express");
 const router = express.Router();
+const paths = require("../../config/paths");
 const path = require("path");
 
-const publicPath = path.join(__dirname, "../../../../frontend/public");
-
-// --- ROTTE GET (Servono le pagine HTML) ---
+// HOME
 router.get("/", (req, res) => {
-    res.sendFile(path.join(publicPath, "index.html"));
+    res.sendFile(path.join(paths.PUBLIC, "index.html"));
 });
 
+// LOGIN
 router.get("/login", (req, res) => {
-    res.sendFile(path.join(publicPath, "login.html"));
+    res.sendFile(path.join(paths.PUBLIC, "login.html"));
 });
 
+// ABOUT
 router.get("/about", (req, res) => {
-    res.sendFile(path.join(publicPath, "about.html"));
+    res.sendFile(path.join(paths.PUBLIC, "about.html"));
 });
 
-// Nota: Usa 'signin.html' o 'signin.html' in base a come è chiamato il file nella cartella public
+// SIGNIN
 router.get("/signin", (req, res) => {
-    res.sendFile(path.join(publicPath, "signin.html")); 
+    res.sendFile(path.join(paths.PUBLIC, "signin.html"));
 });
 
+// WEATHER
 router.get("/weather", (req, res) => {
-    res.sendFile(path.join(publicPath, "weather.html"));
+    res.sendFile(path.join(paths.PUBLIC, "weather.html"));
 });
+
+module.exports = router;
 
 
 // --- ROTTE POST (Gestiscono i form inviati) ---
