@@ -24,11 +24,16 @@ document.getElementById("weather-form").addEventListener("submit", async functio
         return;
     }
 
-    // Mostra i dettagli meteo
+    // URL dell'icona ufficiale di OpenWeatherMap
+    const iconUrl = `https://openweathermap.org/img/wn/${data.icon}@2x.png`;
+
+    // Mostra i dettagli meteo con l'immagine
     box.innerHTML = `
         <div class="weather-response-box subtitle">
+            <img src="${iconUrl}" alt="${data.description}" style="width: 80px; height: 80px;">
+            <br>
             <strong>${data.city}</strong><br>
-            ${data.description}<br>
+            <span style="text-transform: capitalize;">${data.description}</span><br>
             Temperatura: ${data.temperature}°C<br>
             Umidità: ${data.humidity}%<br>
             Vento: ${data.wind} m/s
