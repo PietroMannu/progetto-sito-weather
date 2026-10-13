@@ -4,20 +4,43 @@
 <head>
     <meta charset="UTF-8">
     <title>About</title>
-    <link rel="stylesheet" href="css/about.css">
-    <link rel="stylesheet" href="css/navbar.css">
-    <link rel="stylesheet" href="css/footer.css">
+    <link rel="stylesheet" href="./css/about.css">
+    <link rel="stylesheet" href="./css/navbar.css">
+    <link rel="stylesheet" href="./css/footer.css">
 </head>
 
 <body>
     <div id="navbar"></div>
 
     <script>
-        fetch("components/navbar.html")
-            .then(res => res.text())
-            .then(html => document.getElementById("navbar").innerHTML = html);
-    </script>
+        const resolveComponentUrl = (componentName) => {
+            if (window.location.protocol === "file:") {
+                return new URL(`./components/${componentName}`, window.location.href).toString();
+            }
 
+            const basePath = window.location.pathname.endsWith("/")
+                ? window.location.pathname
+                : window.location.pathname.replace(/\/[^/]*$/, "/");
+
+            return new URL(`components/${componentName}`, `${window.location.origin}${basePath}`).toString();
+        };
+
+        const loadComponent = (elementId, componentName, fallbackHtml = "") => {
+            fetch(resolveComponentUrl(componentName))
+                .then(res => {
+                    if (!res.ok) throw new Error("Component not found");
+                    return res.text();
+                })
+                .then(html => document.getElementById(elementId).innerHTML = html)
+                .catch(() => {
+                    if (fallbackHtml) {
+                        document.getElementById(elementId).innerHTML = fallbackHtml;
+                    }
+                });
+        };
+
+        loadComponent("navbar", "navbar.html", '<nav class="navbar"><div class="nav-logo">MyApp</div><ul class="nav-links"><li><a href="/">Home</a></li><li><a href="/weather">Weather</a></li><li><a href="/login">Login</a></li><li><a href="/signin">Sign In</a></li><li><a href="/about">About</a></li></ul></nav>');
+    </script>
 
     <!-- HERO SECTION -->
     <section class="hero">
@@ -29,9 +52,7 @@
     <div id="footer"></div>
 
     <script>
-        fetch("components/footer.html")
-            .then(res => res.text())
-            .then(html => document.getElementById("footer").innerHTML = html);
+        loadComponent("footer", "footer.html", '<footer class="footer"><p>© 2026 MyApp – Tutti i diritti riservati</p></footer>');
     </script>
 
 </body>

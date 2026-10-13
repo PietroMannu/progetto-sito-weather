@@ -5,21 +5,25 @@
     box-sizing: border-box;
 }
 
-/* ===== BODY ===== */
 body {
     font-family: Arial, sans-serif;
     background: linear-gradient(135deg, #e3e9f0, #cfd9e8);
+    min-height: 100vh;
+    margin: 0;
+}
+
+.page-shell {
     min-height: 100vh;
     display: flex;
     flex-direction: column;
 }
 
-/* ===== WRAPPER ===== */
 .signin-wrapper {
-    flex: 1; /* occupa lo spazio tra navbar e footer */
+    flex: 1;
     display: flex;
     justify-content: center;
     align-items: center;
+    padding: 40px 20px;
 }
 
 /* ===== SIGNIN BOX ===== */
@@ -32,7 +36,6 @@ body {
     animation: fadeIn 0.4s ease;
 }
 
-/* Titolo */
 .signin-box h2 {
     text-align: center;
     margin-bottom: 25px;
@@ -40,7 +43,6 @@ body {
     font-weight: 600;
 }
 
-/* Input */
 .signin-box input {
     width: 100%;
     padding: 12px;
@@ -56,7 +58,6 @@ body {
     outline: none;
 }
 
-/* Bottone */
 .signin-box button {
     width: 100%;
     padding: 12px;
@@ -77,7 +78,6 @@ body {
     transform: scale(0.98);
 }
 
-/* Animazione */
 @keyframes fadeIn {
     from { opacity: 0; transform: translateY(10px); }
     to   { opacity: 1; transform: translateY(0); }

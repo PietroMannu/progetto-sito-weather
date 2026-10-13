@@ -4,20 +4,59 @@
 <head>
     <meta charset="UTF-8">
     <title>Login</title>
-    <link rel="stylesheet" href="css/login.css">
+    <link rel="stylesheet" href="./css/login.css">
+    <link rel="stylesheet" href="./css/navbar.css">
+    <link rel="stylesheet" href="./css/footer.css">
 </head>
 
 <body>
+    <div class="page-shell">
+        <div id="navbar"></div>
 
-    <div class="login-box">
-        <h2>Login</h2>
-        <form action="/login" method="POST">
-            <input type="text" name="username" placeholder="Username" required>
-            <input type="password" name="password" placeholder="Password" required>
-            <button type="submit">Accedi</button>
-        </form>
+        <main class="login-page">
+            <div class="login-box">
+                <h2>Login</h2>
+                <form action="/login" method="POST">
+                    <input type="text" name="username" placeholder="Username" required>
+                    <input type="password" name="password" placeholder="Password" required>
+                    <button type="submit">Accedi</button>
+                </form>
+            </div>
+        </main>
+
+        <div id="footer"></div>
     </div>
 
+    <script>
+        const resolveComponentUrl = (componentName) => {
+            if (window.location.protocol === "file:") {
+                return new URL(`./components/${componentName}`, window.location.href).toString();
+            }
+
+            const basePath = window.location.pathname.endsWith("/")
+                ? window.location.pathname
+                : window.location.pathname.replace(/\/[^/]*$/, "/");
+
+            return new URL(`components/${componentName}`, `${window.location.origin}${basePath}`).toString();
+        };
+
+        const loadComponent = (elementId, componentName, fallbackHtml = "") => {
+            fetch(resolveComponentUrl(componentName))
+                .then(res => {
+                    if (!res.ok) throw new Error("Component not found");
+                    return res.text();
+                })
+                .then(html => document.getElementById(elementId).innerHTML = html)
+                .catch(() => {
+                    if (fallbackHtml) {
+                        document.getElementById(elementId).innerHTML = fallbackHtml;
+                    }
+                });
+        };
+
+        loadComponent("navbar", "navbar.html", '<nav class="navbar"><div class="nav-logo">MyApp</div><ul class="nav-links"><li><a href="/">Home</a></li><li><a href="/weather">Weather</a></li><li><a href="/login">Login</a></li><li><a href="/signin">Sign In</a></li><li><a href="/about">About</a></li></ul></nav>');
+        loadComponent("footer", "footer.html", '<footer class="footer"><p>© 2026 MyApp – Tutti i diritti riservati</p></footer>');
+    </script>
 </body>
 
 </html>

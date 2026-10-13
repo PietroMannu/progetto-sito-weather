@@ -1,5 +1,6 @@
 const express = require("express");
 const path = require("path");
+require("dotenv").config(); // da aggiungere per il .nov 
 
 // Importazione delle routes
 const pageRoutes = require("./routes/pageroute");

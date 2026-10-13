@@ -4,52 +4,72 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Registrazione - MyApp</title>
-    <link rel="stylesheet" href="/css/navbar.css">
-    <link rel="stylesheet" href="/css/signin.css">
+    <link rel="stylesheet" href="./css/navbar.css">
+    <link rel="stylesheet" href="./css/signin.css">
+    <link rel="stylesheet" href="./css/footer.css">
 </head>
 <body>
+    <div class="page-shell">
+        <div id="navbar"></div>
 
-    <!-- Navbar dinamica -->
-    <div id="navbar-placeholder"></div>
-
-    <main>
-        <section class="card">
-            <h1>Crea un account</h1>
-            <form action="/signin" method="POST">
-                <div class="form-group">
-                    <label for="username">Nome Utente:</label><br>
-                    <input type="text" id="username" name="username" required>
-                </div>
+        <main class="signin-wrapper">
+            <section class="signin-box">
+                <h2>Crea un account</h2>
+                <form action="/signin" method="POST">
+                    <div class="form-group">
+                        <label for="username">Nome Utente:</label><br>
+                        <input type="text" id="username" name="username" required>
+                    </div>
+                    <br>
+                    <div class="form-group">
+                        <label for="email">Email:</label><br>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+                    <br>
+                    <div class="form-group">
+                        <label for="password">Password:</label><br>
+                        <input type="password" id="password" name="password" required>
+                    </div>
+                    <br>
+                    <button type="submit">Registrati</button>
+                </form>
                 <br>
-                <div class="form-group">
-                    <label for="email">Email:</label><br>
-                    <input type="email" id="email" name="email" required>
-                </div>
-                <br>
-                <div class="form-group">
-                    <label for="password">Password:</label><br>
-                    <input type="password" id="password" name="password" required>
-                </div>
-                <br>
-                <button type="submit">Registrati</button>
-            </form>
-            <br>
-            <p>Hai già un account? <a href="/login">Accedi qui</a></p>
-        </section>
-    </main>
+                <p>Hai già un account? <a href="/login">Accedi qui</a></p>
+            </section>
+        </main>
 
-    <!-- Footer dinamico -->
-    <div id="footer-placeholder"></div>
+        <div id="footer"></div>
+    </div>
 
-    <!-- Script per includere Navbar e Footer -->
     <script>
-        fetch('/components/navbar.html')
-            .then(res => res.text())
-            .then(html => document.getElementById('navbar-placeholder').innerHTML = html);
+        const resolveComponentUrl = (componentName) => {
+            if (window.location.protocol === "file:") {
+                return new URL(`./components/${componentName}`, window.location.href).toString();
+            }
 
-        fetch('/components/footer.html')
-            .then(res => res.text())
-            .then(html => document.getElementById('footer-placeholder').innerHTML = html);
+            const basePath = window.location.pathname.endsWith("/")
+                ? window.location.pathname
+                : window.location.pathname.replace(/\/[^/]*$/, "/");
+
+            return new URL(`components/${componentName}`, `${window.location.origin}${basePath}`).toString();
+        };
+
+        const loadComponent = (elementId, componentName, fallbackHtml = "") => {
+            fetch(resolveComponentUrl(componentName))
+                .then(res => {
+                    if (!res.ok) throw new Error("Component not found");
+                    return res.text();
+                })
+                .then(html => document.getElementById(elementId).innerHTML = html)
+                .catch(() => {
+                    if (fallbackHtml) {
+                        document.getElementById(elementId).innerHTML = fallbackHtml;
+                    }
+                });
+        };
+
+        loadComponent('navbar', 'navbar.html', '<nav class="navbar"><div class="nav-logo">MyApp</div><ul class="nav-links"><li><a href="/">Home</a></li><li><a href="/weather">Weather</a></li><li><a href="/login">Login</a></li><li><a href="/signin">Sign In</a></li><li><a href="/about">About</a></li></ul></nav>');
+        loadComponent('footer', 'footer.html', '<footer class="footer"><p>© 2026 MyApp – Tutti i diritti riservati</p></footer>');
     </script>
 </body>
 </html>

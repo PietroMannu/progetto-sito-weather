@@ -5,24 +5,46 @@
     <meta charset="UTF-8">
     <title>Weather API</title>
 
-    <link rel="stylesheet" href="css/navbar.css">
-    <link rel="stylesheet" href="css/footer.css">
-    <link rel="stylesheet" href="css/weather.css">
+    <link rel="stylesheet" href="./css/navbar.css">
+    <link rel="stylesheet" href="./css/footer.css">
+    <link rel="stylesheet" href="./css/weather.css">
 </head>
 
 <body>
-
     <!-- NAVBAR -->
     <div id="navbar"></div>
     <script>
-        fetch("components/navbar.html")
-            .then(res => res.text())
-            .then(html => document.getElementById("navbar").innerHTML = html);
+        const resolveComponentUrl = (componentName) => {
+            if (window.location.protocol === "file:") {
+                return new URL(`./components/${componentName}`, window.location.href).toString();
+            }
+
+            const basePath = window.location.pathname.endsWith("/")
+                ? window.location.pathname
+                : window.location.pathname.replace(/\/[^/]*$/, "/");
+
+            return new URL(`components/${componentName}`, `${window.location.origin}${basePath}`).toString();
+        };
+
+        const loadComponent = (elementId, componentName, fallbackHtml = "") => {
+            fetch(resolveComponentUrl(componentName))
+                .then(res => {
+                    if (!res.ok) throw new Error("Component not found");
+                    return res.text();
+                })
+                .then(html => document.getElementById(elementId).innerHTML = html)
+                .catch(() => {
+                    if (fallbackHtml) {
+                        document.getElementById(elementId).innerHTML = fallbackHtml;
+                    }
+                });
+        };
+
+        loadComponent("navbar", "navbar.html", '<nav class="navbar"><div class="nav-logo">MyApp</div><ul class="nav-links"><li><a href="/">Home</a></li><li><a href="/weather">Weather</a></li><li><a href="/login">Login</a></li><li><a href="/signin">Sign In</a></li><li><a href="/about">About</a></li></ul></nav>');
     </script>
 
     <!-- WEATHER CONTENT -->
     <div class="weather-wrapper">
-
         <div class="weather-box">
             <h2>Weather API</h2>
             <p class="subtitle">Inserisci il nome della città per sapere le condizioni meteo</p>
@@ -33,19 +55,16 @@
             </form>
         </div>
 
-
         <!-- RISULTATO METEO -->
         <div class="weather-box" id="weather-result"></div>
-        <!-- fine del dom-->
     </div>
+
     <!-- FOOTER -->
     <div id="footer"></div>
     <script>
-        fetch("components/footer.html")
-            .then(res => res.text())
-            .then(html => document.getElementById("footer").innerHTML = html);
+        loadComponent("footer", "footer.html", '<footer class="footer"><p>© 2026 MyApp – Tutti i diritti riservati</p></footer>');
     </script>
-    <script src="js/weather.js"></script>
+    <script src="./js/weather.js"></script>
 </body>
 
 </html>

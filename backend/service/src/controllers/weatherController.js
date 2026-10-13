@@ -1,4 +1,3 @@
-// Importiamo tutti gli aiuti dalla cartella utils
 const { getWeather } = require("../utils/apiClient");
 const { WEATHER_API_KEY } = require("../utils/constants");
 const { logInfo, logError } = require("../utils/logger");
