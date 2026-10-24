@@ -16,6 +16,15 @@ const app = express();
 questi quelli mascherati: http://localhost:4000/api/v1/signin*/
 
 
+app.use("/api/v1/auth", createProxyMiddleware({
+    target: config.AUTH_SERVICE_URL,
+    changeOrigin: true,
+    pathWrite: {
+            "^/api/v1/auth": ""
+    }
+
+}));
+
 app.use("/api/v1", createProxyMiddleware({ //tutte le richieste api vengono gestite qui
     target: config.SERVICE_URL,
     changeOrigin: true,
