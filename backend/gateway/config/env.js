@@ -5,7 +5,9 @@ module.exports = {
 
     SERVICE_URL: process.env.SERVICE_URL || "http://localhost:3000",
     
-    AUTH_SERVICE_URL: process.env.AUTH_SERVICE_URL || "http;//localhost:3001"
+    AUTH_SERVICE_URL: process.env.AUTH_SERVICE_URL || "http://localhost:3001",
+
+    WANTED_SERVICE_URL : process.env.WANTED_SERVICE_URL || "http://localhost:3002"
 };
 //In questo caso il file serve solo per gestire comodamente il numero di porta del gateway, fuori dal codice del server
 //qui env non è necessario, si può mettere come non farlo

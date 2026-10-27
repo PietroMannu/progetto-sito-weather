@@ -34,19 +34,3 @@ router.get("/weather", (req, res) => {
 module.exports = router;
 
 
-// --- ROTTE POST (Gestiscono i form inviati) ---
-
-// Gestione invio del form di Login (Risolve Foto 1)
-router.post("/login", (req, res) => {
-    const { email, password } = req.body;
-    console.log("Richiesta di login ricevuta per:", email);
-    res.json({ success: true, message: "Login effettuato con successo!" });
-});
-
-// Gestione invio del form di Registrazione
-router.post("/signin", (req, res) => {
-    console.log("Richiesta di registrazione ricevuta:", req.body);
-    res.json({ success: true, message: "Registrazione completata!" });
-});
-
-module.exports = router;

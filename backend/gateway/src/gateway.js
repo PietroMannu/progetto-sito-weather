@@ -4,6 +4,14 @@ const config = require("../config/env");
 
 const app = express();
 
+app.use("/api/v1/wanted", createProxyMiddleware({ //tutte le richieste api vengono gestite qui
+    target: config.WANTED_SERVICE_URL,
+    changeOrigin: true,
+    pathRewrite: {
+        "^/api/v1/wanted": ""
+    }
+}));
+
 // Proxy verso il service
 // quello che si ottiene qui è l'api versioning + endpoint hiding -> convenzione google, paypal, github microsoft ecc
 // significa che l'utente vada a digita per servizio /api/v1/ (es: /api/v1/weather per accedere al weather service)
@@ -15,7 +23,7 @@ const app = express();
 /*quindi questi per esempio sono quelli veri del service: http://localhost:3000/signin,
 questi quelli mascherati: http://localhost:4000/api/v1/signin*/
 
-
+/*
 app.use("/api/v1/auth", createProxyMiddleware({
     target: config.AUTH_SERVICE_URL,
     changeOrigin: true,
@@ -24,15 +32,17 @@ app.use("/api/v1/auth", createProxyMiddleware({
     }
 
 }));
+*/
 
-app.use("/api/v1", createProxyMiddleware({ //tutte le richieste api vengono gestite qui
-    target: config.SERVICE_URL,
+app.use("/api/v1/wanted", createProxyMiddleware({ //tutte le richieste api vengono gestite qui
+    target: config.WANTED_SERVICE_URL,
     changeOrigin: true,
     pathRewrite: {
-        "^/api/v1": ""
+        "^/api/v1/wanted": ""
     }
 }));
 
 app.listen(config.GATEWAY_PORT, () => {
-    console.log(`Gateway attivo su http://localhost:${config.GATEWAY_PORT}/api/v1`);
+    console.log(`Gateway attivo su http://localhost:${config.GATEWAY_PORT}/api/v1/wanted`);
 });
+    
