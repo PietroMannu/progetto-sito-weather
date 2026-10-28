@@ -12,6 +12,13 @@ app.use("/api/v1/wanted", createProxyMiddleware({ //tutte le richieste api vengo
     }
 }));
 
+
+app.use("/api/v1", createProxyMiddleware({
+    target: config.SERVICE_URL,
+    changeOrigin: true,
+    pathRewrite: { "^/api/v1": "" }
+}));
+
 // Proxy verso il service
 // quello che si ottiene qui è l'api versioning + endpoint hiding -> convenzione google, paypal, github microsoft ecc
 // significa che l'utente vada a digita per servizio /api/v1/ (es: /api/v1/weather per accedere al weather service)
@@ -33,14 +40,6 @@ app.use("/api/v1/auth", createProxyMiddleware({
 
 }));
 */
-
-app.use("/api/v1/wanted", createProxyMiddleware({ //tutte le richieste api vengono gestite qui
-    target: config.WANTED_SERVICE_URL,
-    changeOrigin: true,
-    pathRewrite: {
-        "^/api/v1/wanted": ""
-    }
-}));
 
 app.listen(config.GATEWAY_PORT, () => {
     console.log(`Gateway attivo su http://localhost:${config.GATEWAY_PORT}/api/v1/wanted`);

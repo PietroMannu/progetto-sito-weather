@@ -1,15 +1,45 @@
-/* Stili specifici per la scheda FBI; gli stili di base sono in weather.css. */
+body {
+    margin: 0;
+    font-family: "Segoe UI", Arial, sans-serif;
+    background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+    min-height: 100vh;
+    color: #1d1d1d;
+}
+
 .fbi-wrapper {
-    padding: 24px 16px;
+    display: flex;
+    justify-content: center;
+    padding: 40px 16px;
 }
 
 .fbi-box {
     width: min(760px, 100%);
+    background: #ffffff;
+    border-radius: 16px;
+    padding: 32px;
+    box-shadow: 0 12px 35px rgba(0, 0, 0, 0.35);
+    text-align: center;
 }
 
 .fbi-box h1 {
-    margin-bottom: 12px;
-    color: #333;
+    margin: 0 0 6px;
+    font-size: 2.2rem;
+    color: #0b2a4a;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+.fbi-box .subtitle {
+    margin: 0 0 24px;
+    color: #6b7785;
+    font-style: italic;
+}
+
+#fbi-result h2 {
+    margin: 10px 0 16px;
+    font-size: 1.7rem;
+    color: #b3121b;
+    text-transform: uppercase;
 }
 
 .fbi-image {
@@ -17,17 +47,44 @@
     max-width: 100%;
     max-height: 480px;
     margin: 20px auto;
+    border-radius: 12px;
+    border: 4px solid #0b2a4a;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.3);
     object-fit: contain;
 }
 
 .fbi-description {
     margin: 16px 0;
-    white-space: pre-line;
+    line-height: 1.6;
     text-align: left;
+    white-space: pre-line;
+}
+
+#fbi-result p {
+    margin: 12px 0;
+    line-height: 1.5;
 }
 
 #fbi-result a {
     display: inline-block;
-    margin-top: 12px;
-    color: #154f91;
+    margin-top: 16px;
+    padding: 12px 24px;
+    background: #0b2a4a;
+    color: #ffffff;
+    text-decoration: none;
+    font-weight: bold;
+    border-radius: 8px;
+    transition: background 0.2s;
+}
+
+#fbi-result a:hover {
+    background: #b3121b;
+}
+
+.fbi-reward {
+    padding: 12px;
+    background: #fff4d6;
+    border-left: 5px solid #e0a100;
+    border-radius: 6px;
+    text-align: left;
 }

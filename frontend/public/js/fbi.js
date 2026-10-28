@@ -4,7 +4,7 @@ async function loadWantedPerson() {
 
     try {
         // Il backend chiama l'API FBI e restituisce solo i dati usati qui.
-        const response = await fetch("api/wanted/today");
+        const response = await fetch("/api/v1/wanted/today");
         const person = await response.json();
 
         if (!response.ok) {
@@ -31,17 +31,20 @@ async function loadWantedPerson() {
             result.append(description);
         }
 
-        if (Array.isArray(person.subjects) && person.subjects.length > 0) {
+       if (Array.isArray(person.subjects) && person.subjects.length > 0) {
             const subjects = document.createElement("p");
-            subjects.textContent = `Categoria: ${person.subjects.join(", ")}`;
+            const label = document.createElement("strong");
+            label.textContent = "Categoria: ";
+            subjects.append(label, person.subjects.join(", "));
             result.append(subjects);
-        }
+}
 
         if (person.reward) {
             const reward = document.createElement("p");
-            reward.textContent = person.reward;
+            reward.className = "fbi-reward";
+            reward.textContent = "💰 " + person.reward;
             result.append(reward);
-        }
+}
 
         if (person.url) {
             const link = document.createElement("a");
