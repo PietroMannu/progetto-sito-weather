@@ -1,14 +1,30 @@
 @echo off
-REM Mettere questo file nella cartella principale del progetto (accanto a "backend")
-REM Ogni servizio si apre in una sua finestra di terminale.
+REM Autorisoluzione del percorso (funziona sia nella radice che dentro la cartella .bat)
+cd /d "%~dp0"
+if exist "..\backend" cd ..
 
-start "Service (3000)" cmd /k "cd /d %~dp0backend\service && node src\server.js"
-start "Gateway (4000)" cmd /k "cd /d %~dp0backend\gateway && node src\gateway.js"
+set "ROOT_DIR=%CD%"
 
-REM Servizio FBI (Python): serve per la pagina "FBI Wanted". Cancella la riga se non ti serve.
-start "Wanted (3002)" cmd /k "cd /d %~dp0backend\wanted-service && python server.py"
+echo ========================================
+echo   AVVIO MICROSERVIZI BACKEND
+echo ========================================
 
-REM Auth-service: ancora incompleto, attivalo togliendo REM quando sarà pronto.
-REM start "Auth (3001)" cmd /k "cd /d %~dp0backend\auth-service && node src\authserver.js"
+REM 1. Avvio SERVICE (Porta 3000)
+echo [1/3] Avvio Service...
+start "Service (3000)" cmd /k "cd /d "%ROOT_DIR%\backend\service" && node src\server.js"
+timeout /t 2 /nobreak >nul
 
-echo Servizi avviati. Apri http://localhost:4000/api/v1/wanted/
+REM 2. Avvio GATEWAY (Porta 4000)
+echo [2/3] Avvio Gateway...
+start "Gateway (4000)" cmd /k "cd /d "%ROOT_DIR%\backend\gateway" && node src\gateway.js"
+timeout /t 2 /nobreak >nul
+
+REM 3. Avvio WANTED-SERVICE (Python - Porta 3002)
+echo [3/3] Avvio Wanted-Service (Python)...
+start "Wanted Service (3002)" cmd /k "cd /d "%ROOT_DIR%\backend\wanted-service" && python server.py"
+
+echo.
+echo Servizi avviati!
+echo Apri nel browser: http://localhost:4000/api/v1/wanted/
+echo.
+pause

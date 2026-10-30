@@ -1,17 +1,27 @@
 @echo off
-REM Mettere questo file nella cartella principale del progetto (accanto a "backend")
+REM Autorisoluzione del percorso (funziona sia nella radice che dentro la cartella .bat)
+cd /d "%~dp0"
+if exist "..\backend" cd ..
 
-echo ===== SERVICE =====
-cd /d "%~dp0backend\service" || (echo Cartella service non trovata & pause & exit /b 1)
-if not exist package.json call npm init -y
-call npm install express dotenv
+set "ROOT_DIR=%CD%"
+
+echo ========================================
+echo   INSTALLAZIONE SERVICE
+echo ========================================
+cd /d "%ROOT_DIR%\backend\service"
+call npm install -y
 
 echo.
-echo ===== GATEWAY =====
-cd /d "%~dp0backend\gateway" || (echo Cartella gateway non trovata & pause & exit /b 1)
-if not exist package.json call npm init -y
-call npm install express dotenv http-proxy-middleware
+echo ========================================
+echo   INSTALLAZIONE GATEWAY
+echo ========================================
+cd /d "%ROOT_DIR%\backend\gateway"
+call npm install -y
+call npm install dotenv
+call npm install http-proxy-middleware
 
 echo.
-echo Installazione completata.
+echo ========================================
+echo   INSTALLAZIONE COMPLETATA!
+echo ========================================
 pause
