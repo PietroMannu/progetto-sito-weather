@@ -1,2 +1,21 @@
+# Environment variables / Secret keys
 .env
-/node_modules
+*.env
+*.env.*
+!.env.example
+
+# Dependency folders
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+
+# Build outputs
+dist/
+build/
+.next/
+
+# IDE / System files
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
