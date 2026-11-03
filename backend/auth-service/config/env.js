@@ -10,5 +10,7 @@ requiredVars.forEach(key => {
 });
 
 module.exports = {
-    AUTH_PORT: parseInt(process.env.AUTH_PORT, 10)
+    AUTH_PORT: parseInt(process.env.AUTH_PORT, 10),
+    GOOGLE_CLIENT_ID: process.env.GOOGLE_CLIENT_ID,
+    JWT_SECRET: process.env.JWT_SECRET
 };

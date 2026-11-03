@@ -12,6 +12,14 @@ app.use("/api/v1/wanted", createProxyMiddleware({ //tutte le richieste api vengo
     }
 }));
 
+app.use("/api/v1/auth", createProxyMiddleware({
+    target: config.AUTH_SERVICE_URL,
+    changeOrigin: true,
+    pathWrite: {
+            "^/api/v1/auth": ""
+    }
+
+}));
 
 app.use("/api/v1", createProxyMiddleware({
     target: config.SERVICE_URL,
@@ -30,18 +38,11 @@ app.use("/api/v1", createProxyMiddleware({
 /*quindi questi per esempio sono quelli veri del service: http://localhost:3000/signin,
 questi quelli mascherati: http://localhost:4000/api/v1/signin*/
 
-/*
-app.use("/api/v1/auth", createProxyMiddleware({
-    target: config.AUTH_SERVICE_URL,
-    changeOrigin: true,
-    pathWrite: {
-            "^/api/v1/auth": ""
-    }
 
-}));
-*/
+
+
 
 app.listen(config.GATEWAY_PORT, () => {
-    console.log(`Gateway attivo su http://localhost:${config.GATEWAY_PORT}/api/v1/wanted`);
+    console.log(`Gateway attivo su http://localhost:${config.GATEWAY_PORT}/api/v1/`);
 });
     

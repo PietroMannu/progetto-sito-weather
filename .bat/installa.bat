@@ -6,14 +6,14 @@ if exist "..\backend" cd ..
 set "ROOT_DIR=%CD%"
 
 echo ========================================
-echo   INSTALLAZIONE SERVICE
+echo    INSTALLAZIONE SERVICE
 echo ========================================
 cd /d "%ROOT_DIR%\backend\service"
 call npm install -y
 
 echo.
 echo ========================================
-echo   INSTALLAZIONE GATEWAY
+echo    INSTALLAZIONE GATEWAY
 echo ========================================
 cd /d "%ROOT_DIR%\backend\gateway"
 call npm install -y
@@ -22,6 +22,14 @@ call npm install http-proxy-middleware
 
 echo.
 echo ========================================
-echo   INSTALLAZIONE COMPLETATA!
+echo    INSTALLAZIONE AUTH-SERVICE
+echo ========================================
+cd /d "%ROOT_DIR%\backend\auth-service"
+call npm install -y
+call npm install express axios dotenv passport passport-google-oauth20 express-session
+
+echo.
+echo ========================================
+echo    INSTALLAZIONE COMPLETATA!
 echo ========================================
 pause

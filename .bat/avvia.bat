@@ -14,12 +14,17 @@ echo [1/3] Avvio Service...
 start "Service (3000)" cmd /k "cd /d "%ROOT_DIR%\backend\service" && node src\server.js"
 timeout /t 2 /nobreak >nul
 
-REM 2. Avvio GATEWAY (Porta 4000)
+REM 2. Avvio AUTH-SERVICE (Porta 3001)
+echo [2/3] Avvio Auth-Service...
+start "Auth-Service (3001)" cmd /k "cd /d "%ROOT_DIR%\backend\auth-service" && node src\authserver.js"
+timeout /t 2 /nobreak >nul
+
+REM 3. Avvio GATEWAY (Porta 4000)
 echo [2/3] Avvio Gateway...
 start "Gateway (4000)" cmd /k "cd /d "%ROOT_DIR%\backend\gateway" && node src\gateway.js"
 timeout /t 2 /nobreak >nul
 
-REM 3. Avvio WANTED-SERVICE (Python - Porta 3002)
+REM 4. Avvio WANTED-SERVICE (Python - Porta 3002)
 echo [3/3] Avvio Wanted-Service (Python)...
 start "Wanted Service (3002)" cmd /k "cd /d "%ROOT_DIR%\backend\wanted-service" && python server.py"
 
