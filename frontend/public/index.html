@@ -11,12 +11,7 @@
 
 <body>
     <div id="navbar"></div>
-
-    <script>
-        fetch("/api/v1/components/navbar.html")
-            .then(res => res.text())
-            .then(html => document.getElementById("navbar").innerHTML = html);
-    </script>
+    <script src="/api/v1/js/navbar.js"></script>
 
 
     <!-- HERO SECTION -->
