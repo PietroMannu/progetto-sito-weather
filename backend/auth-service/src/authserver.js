@@ -25,25 +25,23 @@ app.set("trust proxy", 1);
 
 app.use(
   session({
-    secret: env.SESSION_SECRET, // non più hardcoded nel codice
+    secret: env.SESSION_SECRET || "super-secret-key",
     resave: false,
     saveUninitialized: false,
     cookie: {
-      httpOnly: true, // il JS del browser non può leggere il cookie
-      sameSite: "lax", // necessario per il ritorno da Google (navigazione top-level)
-      secure: env.NODE_ENV === "production", // solo HTTPS in produzione
-      maxAge: 1000 * 60 * 60 * 8, // 8 ore
+      httpOnly: true,
+      secure: false, // Metti true solo se usi HTTPS in produzione
+      sameSite: "lax",
     },
-    // NB: senza "store" usa MemoryStore, ok per sviluppo ma NON per produzione
-    // (si svuota a ogni riavvio e non scala su più istanze: usare Redis o simili)
   })
 );
 
 app.use(passport.initialize());
 app.use(passport.session());
 
+// Monta le rotte sulla radice perché authProxy rimuove "/api/v1/auth"
 app.use("/", googleAuthRoutes);
 
 app.listen(env.AUTH_PORT, () => {
-  console.log(`Auth Server avviato sulla porta ${env.AUTH_PORT}`);
+  console.log(`Auth service attivo su http://localhost:${env.AUTH_PORT}`);
 });
