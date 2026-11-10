@@ -10,18 +10,19 @@ body {
     font-family: Arial, sans-serif;
     background: linear-gradient(135deg, #e3e9f0, #cfd9e8);
     min-height: 100vh;
-
     display: flex;
-    flex-direction: column; /* IMPORTANTE */
+    flex-direction: column;
 }
 
 /* ===== HERO SECTION ===== */
 .hero {
-    flex: 1; /* OCCUPA LO SPAZIO DISPONIBILE */
+    flex: 1;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    text-align: center;
+    padding: 20px;
 }
 
 .hero h1 {
@@ -35,6 +36,29 @@ body {
     color: #555;
 }
 
+/* ===== WELCOME GIF SECTION ===== */
+#welcome-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+.welcome-box {
+    margin-top: 25px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.welcome-box img {
+    max-width: 100%;
+    width: 320px;
+    height: auto;
+    border-radius: 12px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
 /* ===== FOOTER ===== */
 .footer {
     background: #ffffff;
@@ -43,6 +67,5 @@ body {
     color: #666;
     font-size: 14px;
     box-shadow: 0 -4px 12px rgba(0,0,0,0.1);
-
-    margin-top: auto; /* SPINGE IL FOOTER IN BASSO */
+    margin-top: auto;
 }
