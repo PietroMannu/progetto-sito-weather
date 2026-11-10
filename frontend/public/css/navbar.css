@@ -1,4 +1,4 @@
-/* ===== NAVBAR ===== */
+/* NAVBAR */
 .navbar {
     width: 100%;
     background: #ffffff;
@@ -7,23 +7,38 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    position: sticky;   /* rimane in alto */
+    position: sticky;
     top: 0;
     z-index: 100;
+}
+
+/* LATO SINISTRO (MyApp + Ciao PIETRO) */
+.nav-left {
+    display: flex;
+    align-items: center;
+    gap: 15px; /* Spazio tra MyApp e il nome */
 }
 
 .nav-logo {
     font-size: 22px;
     font-weight: bold;
     color: #333;
-    letter-spacing: 0.5px;
 }
 
-/* LINKS */
+.welcome-text {
+    font-size: 16px;
+    font-weight: 500;
+    color: #333;
+}
+
+/* LATO DESTRO (LINK) */
 .nav-links {
     list-style: none;
     display: flex;
     gap: 25px;
+    margin: 0;
+    padding: 0;
+    align-items: center;
 }
 
 .nav-links a {
@@ -38,19 +53,4 @@
 .nav-links a:hover {
     background: #e8f1ff;
     color: #005fcc;
-}
-
-/* ===== MOBILE ===== */
-@media (max-width: 600px) {
-    .navbar {
-        flex-direction: column;
-        gap: 10px;
-        padding: 20px;
-    }
-
-    .nav-links {
-        flex-direction: column;
-        gap: 12px;
-        text-align: center;
-    }
 }
