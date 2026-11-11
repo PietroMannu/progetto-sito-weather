@@ -7,12 +7,19 @@ const app = express();
 const authProxy = require("../proxies/authProxy");
 const wantedProxy = require("../proxies/wantedProxy");
 const serviceProxy = require("../proxies/serviceProxy");
+const persistenceProxy = require("../proxies/persistanceProxy");
+
+// Middleware per il parsing del corpo delle richieste in formato JSON
+app.use(express.json());
 
 app.use("/api/v1/auth", authProxy);
 
 app.use("/api/v1/wanted", wantedProxy);
 
+app.use("/api/v1/persistence", persistenceProxy);
+
 app.use("/api/v1", serviceProxy);
+
 
 
 // app.use("/api/v1/wanted", createProxyMiddleware({ //tutte le richieste api vengono gestite qui

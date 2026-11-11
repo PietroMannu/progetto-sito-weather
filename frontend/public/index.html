@@ -13,18 +13,23 @@
     <div id="navbar"></div>
     <script src="/api/v1/js/navbar.js"></script>
 
-    <!-- HERO SECTION -->
     <section class="hero">
         <h1>Benvenuto</h1>
         <p>Questa è la homepage del tuo progetto.</p>
 
+        
         <div id="welcome-content"></div>
-    </section>
 
-    <!-- FOOTER -->
+        <!-- Nuovo pulsante per caricare i dati di persistence -->
+        <button id="show-json-btn" class="btn-json" style="display: none;">
+        Carica Dati Persistence
+        </button>
+        <!--Definizione del contenitore per il JSON (creato spazio fisico affianco al pulsante -->
+        <pre id="json-container" style="display: none;"></pre>
+    </section>
+   
     <div id="footer"></div>
 
-    <!-- SCRIPT HOMEPAGE (Mancava questo!) -->
     <script src="/api/v1/js/index.js"></script>
 </body>
 

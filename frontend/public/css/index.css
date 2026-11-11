@@ -59,6 +59,49 @@ body {
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
 }
 
+/* ===== PULSANTE PERSISTENCE E JSON ===== */
+.btn-json {
+    margin-top: 25px;
+    padding: 12px 26px;
+    font-size: 16px;
+    font-weight: bold;
+    color: #ffffff;
+    background: linear-gradient(135deg, #3b82f6, #2563eb);
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(37, 99, 235, 0.25);
+    transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+}
+
+.btn-json:hover {
+    background: linear-gradient(135deg, #2563eb, #1d4ed8);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(37, 99, 235, 0.35);
+}
+
+.btn-json:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 6px rgba(37, 99, 235, 0.2);
+}
+
+#json-container {
+    margin-top: 20px;
+    padding: 16px 20px;
+    max-width: 650px;
+    width: 100%;
+    max-height: 300px;
+    overflow: auto;
+    background-color: #1e293b;
+    color: #e2e8f0;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 14px;
+    text-align: left;
+    border-radius: 10px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+    line-height: 1.5;
+}
+
 /* ===== FOOTER ===== */
 .footer {
     background: #ffffff;
