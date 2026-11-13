@@ -1,11 +1,17 @@
+require('dotenv').config();
 const express = require('express');
+const cookieParser = require('cookie-parser');
+const env = require('../config/env');
 const app = express();
- // Porta su cui gira il servizio di persistenza
 
 app.use(express.json());
-app.use('/api', require('./persistenceRoutes'));
+app.use(cookieParser());
 
-    
-app.listen(env.PORT, () => {
-  console.log(`Servizio Persistence attivo sulla porta ${env.PORT}`);
+const persistenceRoutes = require('./Routes/persistenceRoutes');
+app.use('/', persistenceRoutes);
+app.use('/api', persistenceRoutes);
+
+const PORT = env.PORT;
+app.listen(PORT, () => {
+  console.log(`Servizio Persistence attivo sulla porta ${PORT}`);
 });

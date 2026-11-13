@@ -13,7 +13,6 @@ async function loadWelcomeGif() {
       return;
     }
 
-    // 1. Mostra la GIF di benvenuto
     const welcomeContent = document.getElementById("welcome-content");
     if (welcomeContent) {
       const box = document.createElement("div");
@@ -27,9 +26,7 @@ async function loadWelcomeGif() {
       welcomeContent.appendChild(box);
     }
 
-    // 2. Attiva il pulsante per il servizio Persistence
     setupJsonButton();
-
   } catch (err) {
     console.error("Errore durante il caricamento della GIF:", err);
   }
@@ -41,33 +38,31 @@ function setupJsonButton() {
 
   if (!btn || !jsonContainer) return;
 
+  btn.style.display = "inline-block";
 
-  btn.style.display = "inline-block"; // con questo il pulsante è ben visibile.
-
-  // Al click, chiama il servizio Persistence
   btn.addEventListener("click", async () => {
     try {
-      //aspetto la chiamata al fetch per il servizio Persistence
-      const res = await fetch("/api/v1/persistence");
-      // se ho risposta negativa, lancio un errore
-      if (!res.ok) {
-        throw new Error(`Errore Persistence: HTTP ${res.status}`);
-      }
-      // se la risposta è positiva, converto in JSON
-      const persistenceData = await res.json();
+      const res = await fetch("/api/v1/auth/me");
 
-      // Mostra il JSON formattato
-      jsonContainer.textContent = JSON.stringify(persistenceData, null, 2);
+      if (!res.ok) {
+        throw new Error(`HTTP ${res.status}`);
+      }
+
+      const userData = await res.json();
+      jsonContainer.textContent = JSON.stringify(userData, null, 2);
       jsonContainer.style.display = "block";
     } catch (err) {
-      console.error("Errore recupero dati Persistence:", err);
-      jsonContainer.textContent = JSON.stringify({ error: "Impossibile recuperare i dati dal servizio Persistence" }, null, 2);
+      console.error("Errore recupero dati account Google:", err);
+      jsonContainer.textContent = JSON.stringify(
+        { error: "Impossibile recuperare i dati del tuo account Google", dettagli: err.message },
+        null,
+        2
+      );
       jsonContainer.style.display = "block";
     }
   });
 }
 
-// Esegue il codice al caricamento del DOM
 if (document.readyState === "loading") {
   window.addEventListener("DOMContentLoaded", loadWelcomeGif);
 } else {

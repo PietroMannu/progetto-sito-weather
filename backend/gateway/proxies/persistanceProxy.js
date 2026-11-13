@@ -5,6 +5,6 @@ module.exports = createProxyMiddleware({
   target: config.PERSISTENCE_SERVICE_URL,
   changeOrigin: true,
   pathRewrite: {
-    "^/api/v1": ""
+    "^/api/v1/persistence": ""
   }
 });
