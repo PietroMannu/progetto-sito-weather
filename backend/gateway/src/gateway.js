@@ -9,9 +9,8 @@ const wantedProxy = require("../proxies/wantedProxy");
 const serviceProxy = require("../proxies/serviceProxy");
 const persistenceProxy = require("../proxies/persistanceProxy");
 
-// Middleware per il parsing del corpo delle richieste in formato JSON
-app.use(express.json());
-
+// Non consumiamo il body qui: il proxy deve inoltrare la richiesta originale
+// così che i microservizi possano leggere correttamente i POST JSON.
 app.use("/api/v1/auth", authProxy);
 
 app.use("/api/v1/wanted", wantedProxy);
