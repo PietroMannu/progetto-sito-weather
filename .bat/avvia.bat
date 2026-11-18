@@ -31,17 +31,22 @@ if not defined PYTHON_EXE (
 )
 
 REM 1. Avvio SERVICE (Porta 3000)
-echo [1/4] Avvio Service...
+echo [1/5] Avvio Service...
 start /B cmd /c "cd /d "%ROOT_DIR%\backend\service" && node src\server.js"
 timeout /t 2 /nobreak >nul
 
-REM 2. Avvio AUTH-SERVICE (Porta 3001)
-echo [2/4] Avvio Auth-Service...
+REM 2. Avvio PERSISTANCE-SERVICE (Porta 5001) - prima dell'auth, che lo chiama dopo il login
+echo [2/5] Avvio Persistance-Service...
+start /B cmd /c "cd /d "%ROOT_DIR%\backend\persistance-service" && node src\persistenceServer.js"
+timeout /t 3 /nobreak >nul
+
+REM 3. Avvio AUTH-SERVICE (Porta 3001)
+echo [3/5] Avvio Auth-Service...
 start /B cmd /c "cd /d "%ROOT_DIR%\backend\auth-service" && node src\authserver.js"
 timeout /t 2 /nobreak >nul
 
-REM 3. Avvio WANTED-SERVICE (Python - Porta 3002)
-echo [3/4] Avvio Wanted-Service (Python)...
+REM 4. Avvio WANTED-SERVICE (Python - Porta 3002)
+echo [4/5] Avvio Wanted-Service (Python)...
 if defined PYTHON_EXE (
     start /B cmd /c "cd /d "%ROOT_DIR%\backend\wanted-service" && "%PYTHON_EXE%" server.py"
 ) else (
@@ -49,8 +54,8 @@ if defined PYTHON_EXE (
 )
 timeout /t 2 /nobreak >nul
 
-REM 4. Avvio GATEWAY (Porta 4000)
-echo [4/4] Avvio Gateway...
+REM 5. Avvio GATEWAY (Porta 4000)
+echo [5/5] Avvio Gateway...
 start /B cmd /c "cd /d "%ROOT_DIR%\backend\gateway" && node src\gateway.js"
 timeout /t 2 /nobreak >nul
 

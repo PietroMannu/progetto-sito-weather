@@ -1,9 +1,3 @@
-const path = require("path");
-
-require("dotenv").config({
-  path: path.resolve(__dirname, "../.env"),
-});
-
 const express = require("express");
 const session = require("express-session");
 const passport = require("../config/passport");
@@ -12,26 +6,19 @@ const googleAuthRoutes = require("./routes/authRoutes");
 
 const app = express();
 
-// app.use(
-//   session({
-//     secret: "super-secret-key",
-//     resave: false,
-//     saveUninitialized: false,
-//   })
-// );
-
 // Siamo dietro al gateway (reverse proxy): serve per i cookie "secure" in produzione
 app.set("trust proxy", 1);
 
 app.use(
   session({
-    secret: env.SESSION_SECRET || "super-secret-key",
+    secret: env.SESSION_SECRET,
     resave: false,
     saveUninitialized: false,
     cookie: {
       httpOnly: true,
       secure: false, // Metti true solo se usi HTTPS in produzione
       sameSite: "lax",
+      maxAge: 60 * 60 * 1000, // scade insieme al token (1 ora)
     },
   })
 );

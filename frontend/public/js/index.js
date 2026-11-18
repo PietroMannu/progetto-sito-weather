@@ -41,24 +41,39 @@ function setupJsonButton() {
   btn.style.display = "inline-block";
 
   btn.addEventListener("click", async () => {
-    try {
-      const res = await fetch("/api/v1/auth/me");
+    jsonContainer.style.display = "block";
+    jsonContainer.textContent = "Caricamento dal database...";
 
-      if (!res.ok) {
-        throw new Error(`HTTP ${res.status}`);
+    try {
+      // Passa dal gateway -> persistance-service -> MongoDB
+      const res = await fetch("/api/v1/persistence/users/me");
+      const data = await res.json().catch(() => ({}));
+
+      let result;
+      if (res.ok) {
+        result = { fonte: "MongoDB (persistance-service)", ...data };
+      } else if (res.status === 401) {
+        result = {
+          errore: "401 - il persistence non ha ricevuto un token valido",
+          suggerimento: "Fai logout e poi di nuovo login con Google"
+        };
+      } else if (res.status === 404) {
+        result = {
+          errore: "404 - token valido ma utente non trovato nel database",
+          suggerimento: "Il salvataggio al login non è avvenuto: controlla il terminale dell'auth-service"
+        };
+      } else {
+        result = { errore: `HTTP ${res.status}`, dettagli: data };
       }
 
-      const userData = await res.json();
-      jsonContainer.textContent = JSON.stringify(userData, null, 2);
-      jsonContainer.style.display = "block";
+      jsonContainer.textContent = JSON.stringify(result, null, 2);
     } catch (err) {
-      console.error("Errore recupero dati account Google:", err);
+      console.error("Errore recupero dati dal persistence:", err);
       jsonContainer.textContent = JSON.stringify(
-        { error: "Impossibile recuperare i dati del tuo account Google", dettagli: err.message },
+        { errore: "Impossibile contattare il persistence", dettagli: err.message },
         null,
         2
       );
-      jsonContainer.style.display = "block";
     }
   });
 }

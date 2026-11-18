@@ -26,7 +26,16 @@ echo    INSTALLAZIONE AUTH-SERVICE
 echo ========================================
 cd /d "%ROOT_DIR%\backend\auth-service"
 call npm install -y
-call npm install express axios dotenv passport passport-google-oauth20 express-session
+call npm install express axios dotenv passport passport-google-oauth20 express-session jsonwebtoken
+
+echo.
+echo ========================================
+echo    INSTALLAZIONE PERSISTANCE-SERVICE
+echo ========================================
+cd /d "%ROOT_DIR%\backend\persistance-service"
+if not exist package.json call npm init -y
+call npm install -y
+call npm install express dotenv mongoose jsonwebtoken cookie-parser
 
 echo.
 echo ========================================
