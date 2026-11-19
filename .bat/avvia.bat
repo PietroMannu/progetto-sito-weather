@@ -35,9 +35,9 @@ echo [1/5] Avvio Service...
 start /B cmd /c "cd /d "%ROOT_DIR%\backend\service" && node src\server.js"
 timeout /t 2 /nobreak >nul
 
-REM 2. Avvio PERSISTANCE-SERVICE (Porta 5001) - prima dell'auth, che lo chiama dopo il login
-echo [2/5] Avvio Persistance-Service...
-start /B cmd /c "cd /d "%ROOT_DIR%\backend\persistance-service" && node src\persistenceServer.js"
+REM 2. Avvio PERSISTENCE-SERVICE (Porta 5001) - prima dell'auth, che lo chiama dopo il login
+echo [2/5] Avvio Persistence-Service...
+start /B cmd /c "cd /d "%ROOT_DIR%\backend\persistence-service" && node src\persistenceServer.js"
 timeout /t 3 /nobreak >nul
 
 REM 3. Avvio AUTH-SERVICE (Porta 3001)

@@ -9,14 +9,14 @@ echo ========================================
 echo    INSTALLAZIONE SERVICE
 echo ========================================
 cd /d "%ROOT_DIR%\backend\service"
-call npm install -y
+call npm install
 
 echo.
 echo ========================================
 echo    INSTALLAZIONE GATEWAY
 echo ========================================
 cd /d "%ROOT_DIR%\backend\gateway"
-call npm install -y
+call npm install
 call npm install dotenv
 call npm install http-proxy-middleware
 
@@ -25,16 +25,16 @@ echo ========================================
 echo    INSTALLAZIONE AUTH-SERVICE
 echo ========================================
 cd /d "%ROOT_DIR%\backend\auth-service"
-call npm install -y
+call npm install
 call npm install express axios dotenv passport passport-google-oauth20 express-session jsonwebtoken
 
 echo.
 echo ========================================
-echo    INSTALLAZIONE PERSISTANCE-SERVICE
+echo    INSTALLAZIONE PERSISTENCE-SERVICE
 echo ========================================
-cd /d "%ROOT_DIR%\backend\persistance-service"
+cd /d "%ROOT_DIR%\backend\persistence-service"
 if not exist package.json call npm init -y
-call npm install -y
+call npm install
 call npm install express dotenv mongoose jsonwebtoken cookie-parser
 
 echo.
