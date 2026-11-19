@@ -39,6 +39,17 @@ call npm install express dotenv mongoose jsonwebtoken cookie-parser
 
 echo.
 echo ========================================
+echo    VERIFICA SERVIZI PYTHON (WANTED E MOVIE)
+echo ========================================
+where python >nul 2>&1
+if %errorlevel%==0 (
+    echo Python rilevato correttamente. Nessuna libreria esterna richiesta per wanted-service e movie-service.
+) else (
+    echo [ATTENZIONE] Python non trovato nel PATH di sistema. Installa Python 3 per avviare wanted-service e movie-service.
+)
+
+echo.
+echo ========================================
 echo    INSTALLAZIONE COMPLETATA!
 echo ========================================
 pause

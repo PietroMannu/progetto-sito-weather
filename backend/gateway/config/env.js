@@ -8,6 +8,8 @@ module.exports = {
     AUTH_SERVICE_URL: process.env.AUTH_SERVICE_URL || "http://localhost:3001",
 
     WANTED_SERVICE_URL : process.env.WANTED_SERVICE_URL || "http://localhost:3002",
+    
+    MOVIE_SERVICE_URL: process.env.MOVIE_SERVICE_URL || "http://localhost:3003",
 
     PERSISTENCE_SERVICE_URL: process.env.PERSISTENCE_SERVICE_URL || "http://localhost:5001"
 };

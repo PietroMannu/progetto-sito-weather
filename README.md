@@ -80,6 +80,11 @@ DB_NAME=progetto
 JWT_SECRET=<UGUALE a dell'auth-service quella>
 ```
 
+### 'backend/movie-service/.env'
+
+MOVIE_PORT=3003
+TMDB_API_KEY=6ad3220102d4ecee9ea63940bc03baef
+
 ### Dove trovare i valori
 
 | Valore | Dove |

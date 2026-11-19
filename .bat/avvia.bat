@@ -10,11 +10,11 @@ echo    AVVIO MICROSERVIZI BACKEND
 echo ========================================
 
 REM -------------------------------------------------------
-REM RILEVAMENTO PYTHON (Percorso individuato da VS Code)
+REM RILEVAMENTO PYTHON
 REM -------------------------------------------------------
 set "PYTHON_EXE="
 
-REM 1. Cerca l'ambiente virtuale nella radice del progetto (.venv o venv)
+REM 1. Cerca eventuale ambiente virtuale (.venv o venv)
 if exist "%ROOT_DIR%\.venv\Scripts\python.exe" (
     set "PYTHON_EXE=%ROOT_DIR%\.venv\Scripts\python.exe"
 ) else if exist "%ROOT_DIR%\venv\Scripts\python.exe" (
@@ -23,39 +23,60 @@ if exist "%ROOT_DIR%\.venv\Scripts\python.exe" (
     set "PYTHON_EXE=%ROOT_DIR%\backend\wanted-service\.venv\Scripts\python.exe"
 )
 
-REM 2. Fallback su installazioni globali utente se .venv non viene trovato
+REM 2. Cerca nelle installazioni utente Windows
 if not defined PYTHON_EXE (
     for /d %%d in ("%LOCALAPPDATA%\Programs\Python\Python*") do (
         if exist "%%d\python.exe" set "PYTHON_EXE=%%d\python.exe"
     )
 )
 
+REM 3. Cerca nel PATH di sistema (where python / where py)
+if not defined PYTHON_EXE (
+    for /f "delims=" %%p in ('where python 2^>nul') do (
+        if not defined PYTHON_EXE set "PYTHON_EXE=%%p"
+    )
+)
+if not defined PYTHON_EXE (
+    for /f "delims=" %%p in ('where py 2^>nul') do (
+        if not defined PYTHON_EXE set "PYTHON_EXE=%%p"
+    )
+)
+
 REM 1. Avvio SERVICE (Porta 3000)
-echo [1/5] Avvio Service...
+echo [1/6] Avvio Service...
 start /B cmd /c "cd /d "%ROOT_DIR%\backend\service" && node src\server.js"
 timeout /t 2 /nobreak >nul
 
 REM 2. Avvio PERSISTENCE-SERVICE (Porta 5001) - prima dell'auth, che lo chiama dopo il login
-echo [2/5] Avvio Persistence-Service...
+echo [2/6] Avvio Persistence-Service...
 start /B cmd /c "cd /d "%ROOT_DIR%\backend\persistence-service" && node src\persistenceServer.js"
 timeout /t 3 /nobreak >nul
 
 REM 3. Avvio AUTH-SERVICE (Porta 3001)
-echo [3/5] Avvio Auth-Service...
+echo [3/6] Avvio Auth-Service...
 start /B cmd /c "cd /d "%ROOT_DIR%\backend\auth-service" && node src\authserver.js"
 timeout /t 2 /nobreak >nul
 
 REM 4. Avvio WANTED-SERVICE (Python - Porta 3002)
-echo [4/5] Avvio Wanted-Service (Python)...
+echo [4/6] Avvio Wanted-Service (Python)...
 if defined PYTHON_EXE (
     start /B cmd /c "cd /d "%ROOT_DIR%\backend\wanted-service" && "%PYTHON_EXE%" server.py"
 ) else (
-    echo [ERRORE] Impossibile trovare l'interprete Python in .venv!
+    echo [ERRORE] Impossibile trovare l'interprete Python!
 )
 timeout /t 2 /nobreak >nul
 
-REM 5. Avvio GATEWAY (Porta 4000)
-echo [5/5] Avvio Gateway...
+REM 5. Avvio MOVIE-SERVICE (Python - Porta 3003)
+echo [5/6] Avvio Movie-Service (Python)...
+if defined PYTHON_EXE (
+    start /B cmd /c "cd /d "%ROOT_DIR%\backend\movie-service" && "%PYTHON_EXE%" server.py"
+) else (
+    echo [ERRORE] Impossibile trovare l'interprete Python!
+)
+timeout /t 2 /nobreak >nul
+
+REM 6. Avvio GATEWAY (Porta 4000)
+echo [6/6] Avvio Gateway...
 start /B cmd /c "cd /d "%ROOT_DIR%\backend\gateway" && node src\gateway.js"
 timeout /t 2 /nobreak >nul
 
@@ -64,6 +85,6 @@ echo Servizi avviati in background!
 echo Apertura del browser in corso...
 echo.
 
-start http://localhost:4000/api/v1/wanted/
+start http://localhost:4000/api/v1
 
 pause

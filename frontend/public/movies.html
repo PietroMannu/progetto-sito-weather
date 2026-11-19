@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cinema &amp; Trailer</title>
+  <link rel="stylesheet" href="/api/v1/css/navbar.css" />
+  <link rel="stylesheet" href="/api/v1/movies/css/movies.css" />
+</head>
+<body>
+
+  <div id="navbar"></div>
+
+  <main class="container">
+    <form class="search-box" id="search-form">
+      <input
+        type="text"
+        id="search-input"
+        placeholder="Cerca qualsiasi film (es. 1997: Fuga da New York, Matrix, Interstellar...)"
+        required
+      />
+      <button type="submit" class="btn">Cerca Film</button>
+    </form>
+
+    <div class="suggestions">
+      <span>Ricerche rapide:</span>
+      <button type="button" class="btn-secondary" data-q="1997: Fuga da New York">1997: Fuga da New York</button>
+      <button type="button" class="btn-secondary" data-q="Matrix">Matrix</button>
+      <button type="button" class="btn-secondary" data-q="Interstellar">Interstellar</button>
+      <button type="button" class="btn-secondary" data-q="Il Padrino">Il Padrino</button>
+      <button type="button" class="btn-secondary" data-q="Oppenheimer">Oppenheimer</button>
+      <button type="button" class="btn-secondary" data-q="Batman">Batman</button>
+    </div>
+
+    <!-- Player Trailer -->
+    <section class="trailer-modal" id="trailer-box">
+      <div class="trailer-header">
+        <h2 id="trailer-title" class="trailer-title">Trailer</h2>
+        <button type="button" class="btn-secondary" id="close-trailer">Chiudi trailer ✕</button>
+      </div>
+      <div class="video-wrapper">
+        <iframe
+          id="trailer-frame"
+          title="Movie Trailer"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowfullscreen
+        ></iframe>
+      </div>
+    </section>
+
+    <h2 class="section-title" id="results-heading">Film del Giorno</h2>
+    <div id="status" class="status-msg">Caricamento film in corso...</div>
+    <div class="grid" id="movies-grid"></div>
+  </main>
+
+  <!-- Modale Locandina HD e Scheda Completa (al clic sull'immagine) -->
+  <div class="lightbox-backdrop" id="poster-modal">
+    <div class="lightbox-content">
+      <button type="button" class="lightbox-close" id="close-poster-modal" title="Chiudi">✕</button>
+      <img id="modal-poster-img" src="" alt="Locandina HD" />
+      <div class="lightbox-info">
+        <h2 id="modal-title"></h2>
+        <p class="lightbox-meta" id="modal-meta"></p>
+        <p class="lightbox-desc" id="modal-desc"></p>
+        <div class="lightbox-actions">
+          <button type="button" class="btn" id="modal-trailer-btn">▶ Guarda Trailer</button>
+          <a id="modal-tmdb-link" href="#" target="_blank" rel="noopener noreferrer" class="btn-outline">Apri su TMDB</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="/api/v1/js/navbar.js"></script>
+  <script src="/api/v1/movies/js/movies.js"></script>
+</body>
+</html>

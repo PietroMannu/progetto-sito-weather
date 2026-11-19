@@ -6,6 +6,7 @@ const app = express();
 
 const authProxy = require("../proxies/authProxy");
 const wantedProxy = require("../proxies/wantedProxy");
+const movieProxy = require("../proxies/movieProxy");
 const serviceProxy = require("../proxies/serviceProxy");
 const persistenceProxy = require("../proxies/persistanceProxy");
 
@@ -14,6 +15,8 @@ const persistenceProxy = require("../proxies/persistanceProxy");
 app.use("/api/v1/auth", authProxy);
 
 app.use("/api/v1/wanted", wantedProxy);
+
+app.use("/api/v1/movies", movieProxy);
 
 app.use("/api/v1/persistence", persistenceProxy);
 
